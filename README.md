@@ -1,3 +1,3 @@
 #Pocket Pong
 
-[Try It Here!]
+[Try It Here!](https://gushihiro.github.io/pong-js/)
