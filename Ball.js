@@ -1,4 +1,4 @@
-const INITIAL_VELOCITY = 0.025;
+let INITIAL_VELOCITY = 0.05;
 const VELOCITY_INCREASE = .000005
 
 export default class Ball {
@@ -27,6 +27,13 @@ export default class Ball {
     return this.ballElem.getBoundingClientRect()
   }
 
+  stop() {
+    this.x = 50;
+    this.y = 50;
+    this.direction = { x: 0 }
+    INITIAL_VELOCITY = 0;
+  }
+
   reset() {
     this.x = 50;
     this.y = 50;
@@ -39,13 +46,18 @@ export default class Ball {
       this.direction = { x: Math.cos(heading), y: Math.sin(heading) }
     }
     this.velocity = INITIAL_VELOCITY
+    INITIAL_VELOCITY = .05;
   }
 
   update(delta, paddleRects) {
     this.x += this.direction.x * this.velocity * delta
     this.y += this.direction.y * this.velocity * delta
-    this.velocity += VELOCITY_INCREASE * delta
-    const rect = this.rect()
+    if (INITIAL_VELOCITY > 0) {
+      this.velocity += VELOCITY_INCREASE * delta
+    } else {
+      return null
+    }
+      const rect = this.rect()
 
     if (rect.bottom >= window.innerHeight || rect.top <= 0) {
       this.direction.y *= -1
